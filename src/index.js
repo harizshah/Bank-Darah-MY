@@ -6,10 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import {ConfigProvider} from "antd";
 import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
+    <Provider store={store}>
         <ConfigProvider
             theme={{
                 token: {
@@ -23,7 +25,7 @@ root.render(
                 <App/>
             </DevSupport>
         </ConfigProvider>
-    </React.StrictMode>
+    </ Provider>
 );
 
 
