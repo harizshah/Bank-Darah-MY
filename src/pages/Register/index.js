@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Form, Input, Button, Radio, message} from "antd";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import OrgHospitalForm from "./OrgHospitalForm";
-import {RegisterUser} from "../../apicalls/user";
+import {RegisterUser} from "../../apicalls/users";
 
 function Register() {
     const [type, setType] = React.useState('donor');
-
+    const navigate = useNavigate();
     const onFinish = async(values) =>{
         try {
             const response = await RegisterUser({
@@ -22,6 +22,13 @@ function Register() {
             message.error(error.message)
         }
     }
+
+    useEffect(() => {
+        if (localStorage.getItem("token")){
+            navigate("/")
+        }
+    }, []);
+
     return (
         <div className='flex h-screen items-center justify-center bg-primary'>
             <Form layout="vertical" className='bg-white rounded shadow grid grid-cols-2 p-5 gap-5 w-1/2'

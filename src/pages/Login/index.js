@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Form, Input, Button, Radio, message} from "antd";
 import {Link, useNavigate} from "react-router-dom";
-import {LoginUser} from "../../apicalls/user";
+import {LoginUser} from "../../apicalls/users";
 
 function Login() {
     const [type, setType] = React.useState('donor');
@@ -20,6 +20,13 @@ function Login() {
             message.error(error.message);
         }
     }
+
+    useEffect(() => {
+        if (localStorage.getItem("token")){
+            navigate("/")
+        }
+    }, []);
+
     return (
         <div className='flex h-screen items-center justify-center bg-primary'>
             <Form layout="vertical" className='bg-white rounded shadow grid  p-5 gap-5 w-1/3'

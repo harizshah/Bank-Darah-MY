@@ -1,18 +1,43 @@
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+// import {BrowserRouter, Routes, Route} from "react-router-dom";
+// import Home from "./pages/Home";
+// import Login from "./pages/Login";
+// import Register from "./pages/Register";
+// import ProjectedPage from "./components/ProjectedPage";
+//
+// function App() {
+//   return (
+//       <BrowserRouter>
+//         <Routes>
+//             <Route path="/" element={<ProjectedPage><Home /><ProjectedPage>} />
+//             <Route path="/login" element={<Login />} />
+//             <Route path="/register" element={<Register />} />
+//             <Routes />
+//       </BrowserRouter>
+//   );
+// }
+//
+// export default App;
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProtectedPage from "./components/ProtectedPage";
 
 function App() {
-  return (
-      <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route
+                    path="/"
+                    element={<ProtectedPage><Home /></ProtectedPage>}
+                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
             </Routes>
-      </BrowserRouter>
-  );
+        </BrowserRouter>
+    );
 }
 
 export default App;
+

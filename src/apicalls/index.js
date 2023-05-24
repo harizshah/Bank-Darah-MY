@@ -5,13 +5,12 @@ export const axiosInstance = async(method , endpoint, payload)=> {
       const response = await axios({
           method,
           url: endpoint,
-          data: payload
-      }
-      , {
+          data: payload,
           headers: {
-              authorization : `Bearer ${localStorage.getItem("token")}`
-          }
-          })
+              authorization: `Bearer ${localStorage.getItem("token")}`
+          },
+      },
+      );
         return response.data;
     } catch (error) {
         return error;
