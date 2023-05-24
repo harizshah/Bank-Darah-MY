@@ -7,7 +7,7 @@ function OrgHospitalForm({type}) {
         <>
             <Form.Item
                 label={type === 'hospital' ? 'Hospital Name' : 'Organization Name'}
-                name={type === 'hospital' ? 'HospitalName' : 'OrganizationName'}>
+                name={type === 'hospital' ? 'hospitalName' : 'organizationName'}>
                 <Input />
             </Form.Item>
             <Form.Item name="owner" label='Owner'>
@@ -23,7 +23,7 @@ function OrgHospitalForm({type}) {
                 <Input />
             </Form.Item>
             <Form.Item name="password" label='Password'>
-                <Input />
+                <Input type="password" />
             </Form.Item>
             <Form.Item name="address" label='Address' className="col-span-2">
                 <TextArea />

@@ -1,13 +1,26 @@
 import React from 'react';
-import {Form, Input, Button, Radio} from "antd";
+import {Form, Input, Button, Radio, message} from "antd";
 import {Link} from "react-router-dom";
 import OrgHospitalForm from "./OrgHospitalForm";
+import {RegisterUser} from "../../apicalls/user";
 
 function Register() {
     const [type, setType] = React.useState('donor');
 
-    const onFinish = (values) =>{
-        console.log(values)
+    const onFinish = async(values) =>{
+        try {
+            const response = await RegisterUser({
+                ...values,
+                userType: type,
+            });
+            if(response.success) {
+                message.success(response.message);
+            } else {
+                throw new Error(response.message);
+            }
+        } catch (error) {
+            message.error(error.message)
+        }
     }
     return (
         <div className='flex h-screen items-center justify-center bg-primary'>

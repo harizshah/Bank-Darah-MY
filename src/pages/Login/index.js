@@ -1,12 +1,24 @@
 import React from 'react';
-import {Form, Input, Button, Radio} from "antd";
-import {Link} from "react-router-dom";
+import {Form, Input, Button, Radio, message} from "antd";
+import {Link, useNavigate} from "react-router-dom";
+import {LoginUser} from "../../apicalls/user";
 
 function Login() {
     const [type, setType] = React.useState('donor');
-
-    const onFinish = (values) =>{
-        console.log(values)
+    const navigate = useNavigate()
+    const onFinish = async (values) =>{
+        try {
+            const response = await LoginUser(values);
+            if (response.success) {
+                message.success(response.message);
+                localStorage.setItem("token", response.data);
+                navigate("/");
+            } else {
+                throw new Error(response.message);
+            }
+        } catch (error) {
+            message.error(error.message);
+        }
     }
     return (
         <div className='flex h-screen items-center justify-center bg-primary'>
