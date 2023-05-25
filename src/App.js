@@ -25,6 +25,7 @@ import Register from "./pages/Register";
 import ProtectedPage from "./components/ProtectedPage";
 import {useSelector} from "react-redux";
 import Spinner from "./components/Spinner";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
                     <Route
                         path="/"
                         element={<ProtectedPage><Home /></ProtectedPage>}
+                    />
+                    <Route
+                        path="/profile"
+                        element={<ProtectedPage><Profile /></ProtectedPage>}
                     />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />

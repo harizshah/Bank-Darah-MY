@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {GetCurrentUser} from "../apicalls/users";
 import {message} from "antd";
 import { useNavigate} from "react-router-dom";
@@ -54,7 +54,9 @@ function ProtectedPage({children}) {
                 <div className="flex items-center gap-1">
                     <i className="ri-shield-user-line"></i>
                     <div className="flex flex-col">
-                        <span className="mr-5 text-md cursor-pointer">
+                        <span className="mr-5 text-md cursor-pointer"
+                              onClick={() => navigate("profile")}
+                        >
                             {getLoggedInUserName(currentUser).toUpperCase()}</span>
                     </div>
 
@@ -69,7 +71,7 @@ function ProtectedPage({children}) {
             </div>
 
             {/*{body}*/}
-            <div className="p-5">{children}</div>
+            <div className="p-5 py-2">{children}</div>
     </div>
         )
     );
