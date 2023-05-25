@@ -3,22 +3,30 @@ import {Form, Input, Button, Radio, message} from "antd";
 import {Link, useNavigate} from "react-router-dom";
 import OrgHospitalForm from "./OrgHospitalForm";
 import {RegisterUser} from "../../apicalls/users";
+import {useDispatch} from "react-redux";
+import {SetLoading} from "../../redux/loadersSlice";
+import {getAntdInputValidation} from "../../utils/helpers";
 
 function Register() {
     const [type, setType] = React.useState('donor');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const onFinish = async(values) =>{
         try {
+            dispatch(SetLoading(true));
             const response = await RegisterUser({
                 ...values,
                 userType: type,
             });
+            dispatch(SetLoading(true));
             if(response.success) {
                 message.success(response.message);
+                navigate("/login");
             } else {
                 throw new Error(response.message);
             }
         } catch (error) {
+            dispatch(SetLoading(false));
             message.error(error.message)
         }
     }
@@ -51,16 +59,24 @@ function Register() {
                 {type === 'donor' &&
                     <>
                         {" "}
-                        <Form.Item label="Name" name="name">
+                        <Form.Item label="Name" name="name"
+                              rules={getAntdInputValidation()}
+                        >
                     <Input />
                 </Form.Item>
-                    <Form.Item label="Email" name="email">
+                    <Form.Item label="Email" name="email"
+                               rules={getAntdInputValidation()}
+                    >
                         <Input />
                     </Form.Item>
-                    <Form.Item label="Phone" name="phone">
+                    <Form.Item label="Phone" name="phone"
+                               rules={getAntdInputValidation()}
+                    >
                         <Input />
                     </Form.Item>
-                    <Form.Item label="Password" name="password">
+                    <Form.Item label="Password" name="password"
+                               rules={getAntdInputValidation()}
+                    >
                         <Input type="password"/>
                     </Form.Item> </>}
 

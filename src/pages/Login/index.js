@@ -2,13 +2,19 @@ import React, {useEffect} from 'react';
 import {Form, Input, Button, Radio, message} from "antd";
 import {Link, useNavigate} from "react-router-dom";
 import {LoginUser} from "../../apicalls/users";
+import {useDispatch} from "react-redux";
+import {SetLoading} from "../../redux/loadersSlice";
+import {getAntdInputValidation} from "../../utils/helpers";
 
 function Login() {
     const [type, setType] = React.useState('donor');
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const onFinish = async (values) =>{
         try {
+            dispatch(SetLoading(true))
             const response = await LoginUser(values);
+            dispatch(SetLoading(false));
             if (response.success) {
                 message.success(response.message);
                 localStorage.setItem("token", response.data);
@@ -17,13 +23,14 @@ function Login() {
                 throw new Error(response.message);
             }
         } catch (error) {
+            dispatch(SetLoading(false))
             message.error(error.message);
         }
     }
 
     useEffect(() => {
-        if (localStorage.getItem("token")){
-            navigate("/")
+        if (localStorage.getItem("token")) {
+            navigate("/");
         }
     }, []);
 
@@ -46,10 +53,14 @@ function Login() {
                     <Radio value="organization">Organization</Radio>
                 </Radio.Group>
 
-                        <Form.Item label="Email" name="email">
+                        <Form.Item label="Email" name="email"
+                                   rules={getAntdInputValidation()}
+                        >
                             <Input />
                         </Form.Item>
-                        <Form.Item label="Password" name="password">
+                        <Form.Item label="Password" name="password"
+                                   rules={getAntdInputValidation()}
+                        >
                             <Input type="password"/>
                         </Form.Item>
 
