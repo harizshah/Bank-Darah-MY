@@ -33,7 +33,7 @@ function Inventory() {
                 if(record.inventoryType === "in") {
                     return record.donor.name
                 } else {
-                    return record.hospital.name
+                    return record.hospital.hospitalName;
                 }
             }
         },
@@ -75,7 +75,9 @@ function Inventory() {
                    className="mt-3"
             />
 
-            {open && <InventoryForm open={open} setOpen={setOpen} />}
+            {open && <InventoryForm open={open} setOpen={setOpen}
+                                    reloadData={getData}
+            />}
         </div>
     );
 }
