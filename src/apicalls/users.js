@@ -30,5 +30,3 @@ export const GetAllOrganizationsofADonor = () => {
 export const GetAllOrganizationsofAHospitals = () => {
     return axiosInstance("get", "/api/users/get-all-organizations-of-a-hospital")
 }
-
-export const

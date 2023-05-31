@@ -1,11 +1,13 @@
 import React from 'react'
 import {getDateFormat} from "../utils/helpers";
 import {SetLoading} from "../redux/loadersSlice";
-import {GetInventory} from "../apicalls/inventory";
+import {GetInventoryWithFilters} from "../apicalls/inventory";
+import {Table, message} from "antd";
+import { useDispatch } from 'react-redux';
 
-function InventoryTable({filters}) {
+function InventoryTable({filters, userType}) {
     const [data, setData] = React.useState([]);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch();
     const columns = [
         {
@@ -26,13 +28,7 @@ function InventoryTable({filters}) {
         {
             title: "Reference",
             dataIndex: "reference",
-            render: (text, record) => {
-                if(record.inventoryType === "in") {
-                    return record.donor.name
-                } else {
-                    return record.hospital.hospitalName;
-                }
-            }
+            render: (text, record) => record.organization.organizationName,
         },
         {
             title: "Date",
@@ -44,7 +40,7 @@ function InventoryTable({filters}) {
     const getData = async () => {
         try{
             dispatch(SetLoading(true));
-            const response = await GetInventory();
+            const response = await GetInventoryWithFilters(filters);
             dispatch(SetLoading(false));
             if (response.success) {
                 setData(response.data);
@@ -62,7 +58,11 @@ function InventoryTable({filters}) {
     }, [])
 
     return (
-        <div>InventoryTable</div>
+        <div>
+            <Table columns={columns} dataSource={data}
+                   className="mt-3"
+            />
+        </div>
     )
 }
 

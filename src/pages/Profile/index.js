@@ -5,6 +5,7 @@ import Inventory from "./Inventory";
 import Donors from "./Donors";
 import Hospitals from "./Hospitals";
 import Organizations from "./Organizations";
+import InventoryTable from "../../components/InventoryTable";
 
 function Profile() {
     const {currentUser} = useSelector((state) => state.users);
@@ -28,10 +29,16 @@ function Profile() {
                 {currentUser.userType === "donor" && (
                 <>
                     <Tabs.TabPane tab="Donations" key="4">
-
+                        <InventoryTable filters = {{
+                            inventoryType: "in",
+                            donor: currentUser._id
+                        }} userType="donor"
+                        />
                     </Tabs.TabPane>
                     <Tabs.TabPane tab="Organizations" key="5">
-                        <Organizations />
+                        <Organizations
+                        userType="donor"
+                        />
                     </Tabs.TabPane>
 
 
@@ -41,7 +48,12 @@ function Profile() {
                 {currentUser.userType === "hospital" && (
                     <>
                         <Tabs.TabPane tab="Consumptions" key="6">
-
+                            <InventoryTable filters = {{
+                                inventoryType: "out",
+                                hospital: currentUser._id
+                            }}
+                            userType="hospital"
+                            />
                         </Tabs.TabPane>
                         <Tabs.TabPane tab="Organizations" key="7">
                             <Organizations userType="hospital" />
