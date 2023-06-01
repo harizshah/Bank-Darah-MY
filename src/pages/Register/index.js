@@ -18,7 +18,7 @@ function Register() {
                 ...values,
                 userType: type,
             });
-            dispatch(SetLoading(true));
+            dispatch(SetLoading(false));
             if(response.success) {
                 message.success(response.message);
                 navigate("/login");
